@@ -14,8 +14,18 @@
     <string name="product_supplier_phone_label">Supplier Phone Number</string>
     <string name="hint_product_supplier_phone">xxx-xxx-xxxx</string>
     <string name="order">Order</string>
-    <string name="editor_insert_product_successful">Book Saved</string>
+    <string name="editor_insert_product_successful">Book saved</string>
     <string name="editor_insert_product_failed">Error with saving book</string>
+    <string name="editor_update_product_successful">Book updated</string>
+    <string name="editor_update_product_failed">Error updating book</string>
     <string name="editor_activity_title_add_book">Add a Book</string>
     <string name="editor_activity_title_edit_book">Edit Book Information</string>
+    <string name="unsaved_changes_dialog_message">Discard changes and quit editing?</string>
+    <string name="discard">Discard</string>
+    <string name="keep_editing">Keep Editing</string>
+    <string name="editor_delete_product_failed">Error deleting product</string>
+    <string name="editor_delete_product_successful">Product deleted</string>
+    <string name="delete_dialog_message">Delete this pet?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 </resources>
