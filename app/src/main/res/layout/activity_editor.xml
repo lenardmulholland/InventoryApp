@@ -141,7 +141,6 @@
             <EditText
                 android:id="@+id/edit_product_supplier_phone"
                 android:hint="@string/hint_product_supplier_phone"
-                android:inputType="phone"
                 style="@style/EditorFieldStyle" />
 
             <Button android:id="@+id/order"

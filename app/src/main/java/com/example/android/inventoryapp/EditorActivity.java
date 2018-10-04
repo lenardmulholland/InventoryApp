@@ -2,7 +2,8 @@ package com.example.android.inventoryapp;
 
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.InventoryContract;
-import com.example.android.inventoryapp.data.InventoryDbHelper;
 
 public class EditorActivity extends AppCompatActivity{
     private EditText mProductNameEditText;
@@ -26,6 +26,15 @@ public class EditorActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+
+        Intent intent = getIntent();
+        Uri currentProductUri = intent.getData();
+
+        if(currentProductUri == null){
+            setTitle(getString(R.string.editor_activity_title_add_book));
+        } else{
+            setTitle(getString(R.string.editor_activity_title_edit_book));
+        }
 
         mProductNameEditText = (EditText) findViewById(R.id.edit_product_name);
         mProductPriceEditText = (EditText) findViewById(R.id.edit_product_price);
@@ -41,10 +50,6 @@ public class EditorActivity extends AppCompatActivity{
         String productSupplierNameString = mProductSupplierNameEditText.getText().toString().trim();
         String productSupplierPhoneString = mProductSupplierPhoneEditText.getText().toString().trim();
 
-        InventoryDbHelper mDbHelper = new InventoryDbHelper(this);
-
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(InventoryContract.ProductEntry.COLUMN_PRODUCT_NAME, productNameString);
         values.put(InventoryContract.ProductEntry.COLUMN_PRODUCT_PRICE, productPriceString);
@@ -52,12 +57,12 @@ public class EditorActivity extends AppCompatActivity{
         values.put(InventoryContract.ProductEntry.COLUMN_PRODUCT_SUPPLIER_NAME, productSupplierNameString);
         values.put(InventoryContract.ProductEntry.COLUMN_PRODUCT_SUPPLIER_PHONE, productSupplierPhoneString);
 
-        long newRowId = db.insert(InventoryContract.ProductEntry.TABLE_NAME, null, values);
+        Uri newUri = getContentResolver().insert(InventoryContract.ProductEntry.CONTENT_URI, values);
 
-        if (newRowId == -1) {
-            Toast.makeText(this, "Error with saving book", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Book saved with row id: " + newRowId, Toast.LENGTH_SHORT).show();
+        if (newUri == null){
+            Toast.makeText(this, getString(R.string.editor_insert_product_failed), Toast.LENGTH_SHORT).show();
+        } else{
+            Toast.makeText(this, getString(R.string.editor_insert_product_successful), Toast.LENGTH_SHORT).show();
         }
     }
 
