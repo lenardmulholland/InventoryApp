@@ -24,8 +24,15 @@
     <string name="discard">Discard</string>
     <string name="keep_editing">Keep Editing</string>
     <string name="editor_delete_product_failed">Error deleting product</string>
-    <string name="editor_delete_product_successful">Product deleted</string>
-    <string name="delete_dialog_message">Delete this pet?</string>
+    <string name="editor_delete_product_successful">Book deleted</string>
+    <string name="delete_dialog_message">Delete this book?</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="delete_all_entries">Delete All Books</string>
+    <string name="empty_view_title">No Current Inventory</string>
+    <string name="empty_view_subtitle">Please add a book by using the + button</string>
+    <string name="sale_button_text">Sale</string>
+    <string name="main_activity_product_price_label">Price: $</string>
+    <string name="main_activity_product_quantity_label">Available: </string>
+    <string name="quantity_change_inventory_empty">Book is no longer available. Please order more.</string>
 </resources>

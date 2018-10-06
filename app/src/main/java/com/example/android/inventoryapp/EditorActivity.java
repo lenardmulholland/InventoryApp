@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,20 +51,23 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         Intent intent = getIntent();
         mCurrentProductUri = intent.getData();
+        Button orderButton = findViewById(R.id.order_button);
+        Button deleteButton = findViewById(R.id.delete_button);
 
         if(mCurrentProductUri == null){
             setTitle(getString(R.string.editor_activity_title_add_book));
-            invalidateOptionsMenu();
+            orderButton.setVisibility(View.GONE);
+            deleteButton.setVisibility(View.GONE);
         } else{
             setTitle(getString(R.string.editor_activity_title_edit_book));
             getLoaderManager().initLoader(EXISTING_PET_LOADER, null, this);
         }
 
-        mProductNameEditText = (EditText) findViewById(R.id.edit_product_name);
-        mProductPriceEditText = (EditText) findViewById(R.id.edit_product_price);
-        mProductQuantityTextView = (TextView) findViewById(R.id.edit_product_quantity);
-        mProductSupplierNameEditText = (EditText) findViewById(R.id.edit_product_supplier_name);
-        mProductSupplierPhoneEditText = (EditText) findViewById(R.id.edit_product_supplier_phone);
+        mProductNameEditText = findViewById(R.id.edit_product_name);
+        mProductPriceEditText = findViewById(R.id.edit_product_price);
+        mProductQuantityTextView = findViewById(R.id.edit_product_quantity);
+        mProductSupplierNameEditText = findViewById(R.id.edit_product_supplier_name);
+        mProductSupplierPhoneEditText = findViewById(R.id.edit_product_supplier_phone);
 
         mProductNameEditText.setOnTouchListener(mTouchListener);
         mProductPriceEditText.setOnTouchListener(mTouchListener);

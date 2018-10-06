@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,19 +11,36 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="#2B3D4D"  />
+        android:textColor="#2B3D4D" />
     <TextView
         android:id="@+id/product_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#AEB6BD"  />
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="#AEB6BD"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="32dp"
+        android:layout_below="@+id/product_name"/>
     <TextView
         android:id="@+id/product_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#AEB6BD"  />
-</LinearLayout>
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="#AEB6BD"
+        android:layout_gravity="center_vertical"
+        android:layout_below="@+id/product_name"
+        android:layout_toRightOf="@+id/product_price"/>
+    <Button
+        android:id="@+id/sale_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sale_button_text"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentRight="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+</RelativeLayout>

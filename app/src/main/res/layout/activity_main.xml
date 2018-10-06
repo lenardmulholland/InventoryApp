@@ -9,7 +9,7 @@
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
     </ListView>
 
     <RelativeLayout
@@ -18,26 +18,23 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
 
-        <ImageView
-            android:id="@+id/empty_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_launcher_foreground"/>
-
         <TextView
             android:id="@+id/empty_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/empty_image"
-            android:text="empty_view_title_text"/>
+            android:layout_centerHorizontal="true"
+            android:text="@string/empty_view_title"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
 
         <TextView
             android:id="@+id/empty_subtitle_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_below="@+id/empty_title_text"
-            android:text="empty_view_subtitle_text"/>
+            android:text="@string/empty_view_subtitle"
+            android:textSize="16sp"/>
 
     </RelativeLayout>
 
@@ -47,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:src="@mipmap/ic_launcher_round" />
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_add_black_24dp" />
 
 </RelativeLayout>

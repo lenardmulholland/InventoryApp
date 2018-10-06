@@ -1,21 +1,23 @@
 package com.example.android.inventoryapp;
 
+import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.InventoryContract.ProductEntry;
 
@@ -72,6 +74,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
     }
 
+    private void deleteAllProducts(){
+        int rowsDeleted = getContentResolver().delete(ProductEntry.CONTENT_URI, null, null);
+        Log.v("MainActivity", rowsDeleted + "rows deleted from inventory");
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -82,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         switch (item.getItemId()){
             case R.id.action_insert_dummy_data:
                 insertProduct();
+                return true;
+            case R.id.action_delete_all_entries:
+                deleteAllProducts();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -110,5 +120,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mCursorAdapter.swapCursor(null);
+    }
+
+    public void saleDecreaseQuantity(int columnId, int quantity) {
+
+        if (quantity < 1) {
+            Toast.makeText(this, getString(R.string.quantity_change_inventory_empty),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            quantity = quantity - 1;
+
+            ContentValues values = new ContentValues();
+            values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, quantity);
+
+            Uri updateUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI, columnId);
+
+            getContentResolver().update(updateUri, values, null, null);
+
+        }
     }
 }
