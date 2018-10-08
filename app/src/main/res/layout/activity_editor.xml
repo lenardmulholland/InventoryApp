@@ -51,7 +51,6 @@
             <EditText
                 android:id="@+id/edit_product_price"
                 android:hint="@string/hint_product_price"
-                android:inputType="numberDecimal"
                 style="@style/EditorFieldStyle" />
 
         </LinearLayout>
@@ -143,28 +142,15 @@
                 android:hint="@string/hint_product_supplier_phone"
                 style="@style/EditorFieldStyle" />
 
+            <Button android:id="@+id/order_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:text="@string/order"
+                android:layout_margin="16dp"/>
+
         </LinearLayout>
 
-
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-        <Button android:id="@+id/order_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-            android:text="@string/order"
-            android:layout_margin="16dp"/>
-        <Button android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-            android:text="@string/delete"
-            android:layout_margin="16dp"
-            android:layout_toRightOf="@+id/order_button"/>
-    </RelativeLayout>
-
-    </LinearLayout>
+</LinearLayout>

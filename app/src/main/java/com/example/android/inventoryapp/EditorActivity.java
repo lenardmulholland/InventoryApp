@@ -1,5 +1,6 @@
 package com.example.android.inventoryapp;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -7,9 +8,11 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -27,6 +30,7 @@ import com.example.android.inventoryapp.data.InventoryContract.ProductEntry;
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
     private static final int EXISTING_PET_LOADER = 0;
     private Uri mCurrentProductUri;
+    private Button orderButton;
 
     private EditText mProductNameEditText;
     private EditText mProductPriceEditText;
@@ -51,13 +55,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         Intent intent = getIntent();
         mCurrentProductUri = intent.getData();
-        Button orderButton = findViewById(R.id.order_button);
-        Button deleteButton = findViewById(R.id.delete_button);
+        orderButton = findViewById(R.id.order_button);
 
         if(mCurrentProductUri == null){
             setTitle(getString(R.string.editor_activity_title_add_book));
             orderButton.setVisibility(View.GONE);
-            deleteButton.setVisibility(View.GONE);
         } else{
             setTitle(getString(R.string.editor_activity_title_edit_book));
             getLoaderManager().initLoader(EXISTING_PET_LOADER, null, this);
@@ -74,6 +76,48 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mProductQuantityTextView.setOnTouchListener(mTouchListener);
         mProductSupplierNameEditText.setOnTouchListener(mTouchListener);
         mProductSupplierPhoneEditText.setOnTouchListener(mTouchListener);
+
+        final Button minusButton = findViewById(R.id.reduce_quantity);
+        Button plusButton = findViewById(R.id.increase_quantity);
+
+        minusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String productQuantityString = mProductQuantityTextView.getText().toString();
+                int count = Integer.parseInt(productQuantityString);
+                count = count - 1;
+                if(count < 1){
+                    minusButton.setEnabled(false);
+                } else{
+                    mProductQuantityTextView.setText(String.valueOf(count));
+                }
+            }
+        });
+
+        plusButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String productQuantityString = mProductQuantityTextView.getText().toString();
+                int count = Integer.parseInt(productQuantityString);
+                count = count + 1;
+                mProductQuantityTextView.setText(String.valueOf(count));
+            }
+        });
+
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                String supplierPhoneNumber = mProductSupplierPhoneEditText.getText().toString().trim();
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + supplierPhoneNumber));
+                if (ActivityCompat.checkSelfPermission(EditorActivity.this,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+
+                }
+
+            }
+        });
     }
 
     private void saveProduct() {
@@ -82,14 +126,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String productQuantityString = mProductQuantityTextView.getText().toString().trim();
         String productSupplierNameString = mProductSupplierNameEditText.getText().toString().trim();
         String productSupplierPhoneString = mProductSupplierPhoneEditText.getText().toString().trim();
-
-        if (mCurrentProductUri == null &&
-                TextUtils.isEmpty(productNameString) || TextUtils.isEmpty(productPriceString) ||
-                TextUtils.isEmpty(productQuantityString) || TextUtils.isEmpty(productSupplierNameString) ||
-                TextUtils.isEmpty(productSupplierPhoneString)) {
-            Toast.makeText(getApplicationContext(), "Please, fill in all fields.", Toast.LENGTH_LONG).show();
-            return;
-        }
 
         ContentValues values = new ContentValues();
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, productNameString);
@@ -116,6 +152,21 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         finish();
     }
 
+    private boolean isValid(){
+        String productNameString = mProductNameEditText.getText().toString().trim();
+        String productPriceString = mProductPriceEditText.getText().toString().trim();
+        String productQuantityString = mProductQuantityTextView.getText().toString().trim();
+        String productSupplierNameString = mProductSupplierNameEditText.getText().toString().trim();
+        String productSupplierPhoneString = mProductSupplierPhoneEditText.getText().toString().trim();
+        if (mCurrentProductUri == null &&
+            TextUtils.isEmpty(productNameString) || TextUtils.isEmpty(productPriceString) ||
+            TextUtils.isEmpty(productQuantityString) || TextUtils.isEmpty(productSupplierNameString) ||
+            TextUtils.isEmpty(productSupplierPhoneString)) {
+        Toast.makeText(getApplicationContext(), "Please, fill in all fields.", Toast.LENGTH_LONG).show();
+            return false;
+        } else {return true;}
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_editor, menu);
@@ -137,8 +188,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         switch (item.getItemId()) {
             case R.id.action_save:
-                saveProduct();
-                finish();
+                if (isValid()) {
+                    saveProduct();
+                    finish();
+                }
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -263,7 +316,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             String productSupplierName = cursor.getString(productSupplierNameIndex);
             String productSupplierPhone = cursor.getString(productSupplierPhoneIndex);
 
-            // Update the view on the screen with the values from the database
             mProductNameEditText.setText(productName);
             mProductPriceEditText.setText(productPrice);
             mProductQuantityTextView.setText(Integer.toString(productQuantity));

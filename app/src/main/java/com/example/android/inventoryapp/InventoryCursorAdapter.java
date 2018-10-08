@@ -77,16 +77,6 @@ public class InventoryCursorAdapter extends CursorAdapter{
                 if (mContext instanceof MainActivity) {
                     ((MainActivity) mContext).saleDecreaseQuantity(columnIndex, Integer.valueOf(itemQuantity));
                 }
-                /*if (itemQuantity == 0) {
-                    saleButton.setEnabled(false);
-                } else {
-                    itemQuantity = itemQuantity - 1;
-                    productQuantityTextView.setText(String.valueOf(itemQuantity));
-                }
-                ContentValues values = new ContentValues();
-                values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, itemQuantity);
-                mContext.getContentResolver().update(ProductEntry.CONTENT_URI, values, null, null);*/
-
             }
             db.close();
         }

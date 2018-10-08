@@ -138,7 +138,7 @@ public class InventoryProvider extends ContentProvider {
         }
 
         if(values.containsKey(ProductEntry.COLUMN_PRODUCT_PRICE)) {
-            Integer price = values.getAsInteger(ProductEntry.COLUMN_PRODUCT_PRICE);
+            Float price = values.getAsFloat(ProductEntry.COLUMN_PRODUCT_PRICE);
             if (price == null || price < 0) {
                 throw new IllegalArgumentException("A valid price is required");
             }
