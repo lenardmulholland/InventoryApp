@@ -2,7 +2,7 @@
     <string name="app_name">InventoryApp</string>
     <string name="insert_dummy_data">Insert Dummy Data</string>
     <string name="product_name_label">Product Name</string>
-    <string name="hint_product_name">Book Title</string>
+    <string name="hint_product_name">Title</string>
     <string name="product_price_label">Price</string>
     <string name="hint_product_price">$0.00</string>
     <string name="product_quantity_label">Quantity</string>
@@ -12,7 +12,7 @@
     <string name="product_supplier_name_label">Supplier Name</string>
     <string name="hint_product_supplier_name">Name of Supplier</string>
     <string name="product_supplier_phone_label">Supplier Phone Number</string>
-    <string name="hint_product_supplier_phone">xxx-xxx-xxxx</string>
+    <string name="hint_product_supplier_phone">Phone</string>
     <string name="order">Order</string>
     <string name="editor_insert_product_successful">Book saved</string>
     <string name="editor_insert_product_failed">Error with saving book</string>

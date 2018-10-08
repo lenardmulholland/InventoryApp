@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductEntry.COLUMN_PRODUCT_PRICE, 6);
         values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, 5);
         values.put(ProductEntry.COLUMN_PRODUCT_SUPPLIER_NAME, "Amazon.com");
-        values.put(ProductEntry.COLUMN_PRODUCT_SUPPLIER_PHONE, "");
+        values.put(ProductEntry.COLUMN_PRODUCT_SUPPLIER_PHONE, "8882804331");
 
         Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
     }
